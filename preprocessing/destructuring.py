@@ -3,12 +3,11 @@ import ast
 
 # Load the metadata_filter.csv file
 input_file = "metadata_filter.csv"
-output_file = "processed_metadata_filter.csv"
+output_file = "metadata_filter_flat.csv"
 
 # Define columns to drop
 columns_to_drop = [
-    "adult", "belongs_to_collection", "homepage", "id", "imdb_id", 
-    "overview", "popularity", "status", "tagline", "video", "vote_count"
+    "adult", "belongs_to_collection", "homepage", "id", "imdb_id", "budget", "revenue", "overview", "popularity", "status", "tagline", "video", "vote_count", "release_date", "poster_path", "original_title"
 ]
 
 # Function to process JSON-like columns
@@ -21,11 +20,11 @@ def process_json_column(value, column_name):
         if column_name == "spoken_languages":
             # Assuming the structure is a list of dictionaries with 'name' for the language
             if isinstance(items, list) and items:
-                return '-'.join(item['name'] for item in items if 'name' in item)
+                return '^'.join(item['name'] for item in items if 'name' in item)
         else:
             # For other columns (e.g., 'genres', 'production_companies', 'production_countries')
             if isinstance(items, list):
-                return '-'.join(item['name'] for item in items if 'name' in item)
+                return '^'.join(item['name'] for item in items if 'name' in item)
     except (ValueError, SyntaxError):
         pass
     return ""

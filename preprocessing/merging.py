@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Load the filtered movies file and metadata_filter_flat.csv
-filtered_movies_df = pd.read_csv('filtered_movies.csv')
+filtered_movies_df = pd.read_csv('movies_dat_filter.csv')
 metadata_df = pd.read_csv('metadata_filter_flat.csv')
 
 # Initialize an empty list to store merged movie data
@@ -19,13 +19,13 @@ for _, row in filtered_movies_df.iterrows():
     metadata_genres = metadata_row['genres']
     
     if isinstance(metadata_genres, str):  # Only split if it's a string
-        metadata_genres = metadata_genres.split('-')
+        metadata_genres = metadata_genres.split('^')
     else:
         metadata_genres = []  # If genres is missing or NaN, use an empty list
     
     # Combine genres from both sources, remove duplicates, and join them back into a dash-separated string
     combined_genres = list(set(movie_genres + metadata_genres))
-    combined_genres_str = '-'.join(sorted(combined_genres))
+    combined_genres_str = '^'.join(sorted(combined_genres))
     
     # Create the new row for the merged dataset
     merged_row = {
