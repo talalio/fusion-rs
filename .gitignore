@@ -4,3 +4,4 @@ potentially_useful/
 STEPS.md
 notebookA.ipynb
 old/
+__pycache__
